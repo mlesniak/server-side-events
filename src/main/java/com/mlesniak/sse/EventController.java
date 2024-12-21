@@ -31,17 +31,16 @@ public class EventController {
         log.info("/events called with count {} and max {}", count, max);
 
         var emitter = new SseEmitter(60 * 1000L);
+        var id = UUID.randomUUID().toString();
         Executors.newSingleThreadScheduledExecutor().execute(() -> {
             try {
-                var i = 0;
-                while (i < max) {
+                for (int i = 0; i < max; i++) {
                     var tick = new Tick(i);
                     emitter.send(SseEmitter.event()
                             .name("tick")
-                            .id(UUID.randomUUID().toString())
+                            .id(id)
                             .data(objectMapper.writeValueAsString(tick)));
                     TimeUnit.MILLISECONDS.sleep(500);
-                    i++;
                 }
                 // Without a payload, the event is not correctly processed
                 // in the browser. This is actually expected behaviour,
