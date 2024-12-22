@@ -1,6 +1,5 @@
 package com.mlesniak.sse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
@@ -34,8 +33,6 @@ public class SseServer {
     }
 
     static class SseHandler implements HttpHandler {
-        private final ObjectMapper objectMapper = new ObjectMapper();
-
         @Override
         public void handle(HttpExchange exchange) {
             try {
